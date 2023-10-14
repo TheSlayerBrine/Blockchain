@@ -13,12 +13,12 @@ public class AccountController :ControllerBase
 {
     private readonly IAccountService accountService;
 
-    public AccountController(AccountService accountService)
+    public AccountController(IAccountService accountService)
     {
         this.accountService = accountService;
     }
 
-    [HttpGet("test")]
+    [HttpGet("GetKey")]
     [Authorize]
     public IActionResult GetCurrentKey()
     {

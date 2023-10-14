@@ -3,6 +3,8 @@ using Blockchain.Data.Infrastructure.UnitOfWork;
 using Blockchain.Data.Repositories;
 using Blockchain.Services.Service.Common.Auth;
 using BlockChain.Data.Infrastructure.Context;
+using Blockchain.Services.Service.Accounts;
+using Blockchain.Services.Service.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +37,7 @@ builder.Services.AddScoped<ITransactionContractRepository, TransactionContractRe
 builder.Services.AddScoped<ITransactionPurchaseRepository, TransactionPurchaseRepository>();
 builder.Services.AddScoped<ISmartContractRepository, SmartContractRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
