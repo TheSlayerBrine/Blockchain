@@ -17,7 +17,7 @@ namespace Blockchain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -39,10 +39,10 @@ namespace Blockchain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(26)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
-                    b.Property<int>("SuppySold")
+                    b.Property<int>("SupplySold")
                         .HasColumnType("int");
 
                     b.HasKey("PublicKey");
@@ -58,8 +58,8 @@ namespace Blockchain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("AmountExchanged")
-                        .HasColumnType("real");
+                    b.Property<double>("AmountExchanged")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -87,8 +87,8 @@ namespace Blockchain.Migrations
                         .HasMaxLength(26)
                         .HasColumnType("nvarchar(26)");
 
-                    b.Property<float>("Balance")
-                        .HasColumnType("real");
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
 
                     b.Property<string>("Nickname")
                         .HasColumnType("nvarchar(max)");

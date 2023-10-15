@@ -39,6 +39,45 @@ public class AccountController :ControllerBase
 
             return null;
     }
-    
+
+    [HttpPut("UpdateName")]
+    [Authorize]
+    public IActionResult UpdateName(string? name) // Nu afiseaza Nickname u in OK
+    {
+        var currentAccount = GetCurrentAccount();
+        if (currentAccount is not null)
+        {
+            accountService.ChangeNickname(name, currentAccount.PublicKey);
+            return Ok($"your new name is {currentAccount.Nickname}");
+        }
+
+        return Unauthorized();
+    }
+
+    [HttpPost("DepositAthereum")]
+    [Authorize]
+    public IActionResult DepositAthereum(double amount)
+    {
+        var currentAccount = GetCurrentAccount();
+        if (currentAccount is not null)
+        {
+            accountService.DepositBalance(amount, currentAccount.PublicKey);
+            return Ok($"your new balance is {currentAccount.Balance}");
+        }
+
+        return Unauthorized();
+    }
+    [HttpPost("WithdrawUsd")]
+    [Authorize]
+    public IActionResult WithdrawUsd(double amount)
+    {
+        var currentAccount = GetCurrentAccount();
+        if (currentAccount is not null)
+        {
+            accountService.WithdrawBalance(amount, currentAccount.PublicKey);
+            return Ok($"your new balance is {currentAccount.Balance}");
+        }   
+        return Unauthorized();
+    }
     
 }

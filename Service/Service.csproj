@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Service\Nfts\" />
-      <Folder Include="Service\SmartContracts\" />
       <Folder Include="Service\Transactions\" />
     </ItemGroup>
 

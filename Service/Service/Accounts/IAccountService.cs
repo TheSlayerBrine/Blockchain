@@ -6,6 +6,7 @@ namespace Blockchain.Services.Service.Users;
 public interface IAccountService
 {
     AccountDetailsDto GetDetails(string? key);
-    void ChangeNickname(string name);
-    
+    void ChangeNickname(string name, string? key);
+    double DepositBalance(double amount, string? key);
+    double WithdrawBalance(double amount, string? key);
 }

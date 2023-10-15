@@ -9,7 +9,7 @@ namespace BlockChain.Data.Entities
         public SmartContract FromSmartContract { get; set; }
         public string ToAddress { get; set; }
         public Account ToAccount { get; set; }
-        public float AmountExchanged { get; set; }
+        public double AmountExchanged { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
