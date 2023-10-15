@@ -38,12 +38,17 @@ public class AccountService : IAccountService
         return;
     }
 
+    public double CheckBalance(string? key)
+    {
+        var account = unitOfWork.Accounts.GetById(key);
+        return account.Balance;
+    }
     public double DepositBalance(double amount, string? key)
     {
         var account = unitOfWork.Accounts.GetById(key);
         var convertedAmount = Athereum.ConvertUSDToAthereum(amount);
+        account.Balance += convertedAmount;
         Athereum.Value += convertedAmount * 0.01;
-        account.Balance = convertedAmount;
         unitOfWork.SaveChanges();
         return account.Balance;
     }

@@ -31,9 +31,12 @@ public class AccountController :ControllerBase
             if (identity is not null)
             {
                 var userClaims = identity.Claims;
+                var key = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
+                var balance = accountService.CheckBalance(key);
                 return new AccountModel
                 {
                     PublicKey = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value,
+                    Balance = balance
                 };
             }
 

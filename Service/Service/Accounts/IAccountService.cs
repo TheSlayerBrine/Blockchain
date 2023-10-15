@@ -9,4 +9,5 @@ public interface IAccountService
     void ChangeNickname(string name, string? key);
     double DepositBalance(double amount, string? key);
     double WithdrawBalance(double amount, string? key);
+    double CheckBalance(string? key);
 }
