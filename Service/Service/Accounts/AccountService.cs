@@ -9,12 +9,12 @@ namespace Blockchain.Services.Service.Accounts;
 
 public class AccountService : IAccountService
 {
-    private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
-    public AccountService(IUnitOfWork unitOfWork)
-    {
-        this.unitOfWork = unitOfWork;
-    }
+        public AccountService(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
 
     public AccountDetailsDto GetDetails(string key)
     {
@@ -56,11 +56,16 @@ public class AccountService : IAccountService
     public double WithdrawBalance(double amount, string? key)
     {
         var account = unitOfWork.Accounts.GetById(key);
-        var convertedAmount = Athereum.ConvertAthereumToUSD(amount);
-        Athereum.Value -= amount * 0.01;
-        account.Balance = convertedAmount;
-        unitOfWork.SaveChanges();
-        return account.Balance;
+        if (account.Balance > amount)
+        {
+            var convertedAmount = Athereum.ConvertAthereumToUSD(amount);
+            Athereum.Value -= amount * 0.01;
+            account.Balance -= amount;
+            unitOfWork.SaveChanges();
+            return account.Balance;
+        }
+
+        return 0;
     }
 
     

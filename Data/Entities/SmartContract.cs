@@ -8,8 +8,10 @@ namespace BlockChain.Data.Entities
         public string Name { get; set; }
         public double Price { get; set; }
         public Account Owner { get; set; }
+        public int FirstAvailableNftId { get; set; }
         public string OwnerId { get; set; }
         public int MaxSupply { get; set; }
+        public double Funds { get; set; }
         public int SupplySold { get; set; }
         public IEnumerable<Nft> Nfts { get; set; }
         public IEnumerable<TransactionPurchase> TransactionPurchases { get; set; }

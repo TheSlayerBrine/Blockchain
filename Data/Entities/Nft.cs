@@ -7,7 +7,6 @@ namespace Blockchain.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool OnSale { get; set; } = true;
         public SmartContract Collection { get; set; }
         public string CollectionKey { get; set; }
         public Account? Owner { get; set; }

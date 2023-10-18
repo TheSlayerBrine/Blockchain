@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Z/JvstU/sraRZYRO3d8MWU4bnvrQWzPTJdRwkDhclg6RkoLve1KtbuaGejr+9+hSITwOjowaR2roqAFngtMVcw==",
+  "dgSpecHash": "tP0Z7w763mZf/GKIJOm3DgRdpPXcUi15fLEnl581HSaq9iJPIkP8S3CRHzJhePbyPHFHhIYPi6OEMQ1zsCiIZw==",
   "success": true,
   "projectFilePath": "C:\\Users\\cgame\\RiderProjects\\BlockChain\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\cgame\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -27,6 +28,7 @@
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.build.framework\\17.7.2\\microsoft.build.framework.17.7.2.nupkg.sha512",
+    "C:\\Users\\cgame\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.0\\microsoft.data.sqlclient.sni.runtime.5.1.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.12\\microsoft.entityframeworkcore.7.0.12.nupkg.sha512",

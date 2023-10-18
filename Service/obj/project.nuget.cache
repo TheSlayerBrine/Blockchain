@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "gB4AG1jdBh0n764r+yvqTU0bSl0wjxtf0X0WBsqokex5T9Al3dgZUX/1q9gaNuS/VVczsH30ag9zVQdYyTYwLQ==",
+  "dgSpecHash": "n8cm12SWXYzWVswv8mph2gn7Lbt4jgth9xnIvi2c1Sqz97SSukLoxLNMD+aGXccd9vHWyOHXt0r7vMLKvYIWow==",
   "success": true,
   "projectFilePath": "C:\\Users\\cgame\\RiderProjects\\BlockChain\\Service\\Service.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\cgame\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
@@ -23,6 +24,7 @@
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.aspnetcore.routing.abstractions\\2.2.0\\microsoft.aspnetcore.routing.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
+    "C:\\Users\\cgame\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.0\\microsoft.data.sqlclient.sni.runtime.5.1.0.nupkg.sha512",
     "C:\\Users\\cgame\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",

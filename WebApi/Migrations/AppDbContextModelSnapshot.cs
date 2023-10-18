@@ -28,6 +28,12 @@ namespace Blockchain.Migrations
                         .HasMaxLength(26)
                         .HasColumnType("nvarchar(26)");
 
+                    b.Property<int>("FirstAvailableNftId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Funds")
+                        .HasColumnType("float");
+
                     b.Property<int>("MaxSupply")
                         .HasColumnType("int");
 
@@ -118,9 +124,6 @@ namespace Blockchain.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("OnSale")
-                        .HasColumnType("bit");
 
                     b.Property<string>("OwnerKey")
                         .HasColumnType("nvarchar(26)");
