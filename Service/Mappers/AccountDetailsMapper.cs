@@ -11,7 +11,7 @@ public static AccountDetailsDto ToDetailsDto(this Account entity)
     {
         return null;
     }
-    return new AccountDetailsDto()
+    return new AccountDetailsDto
     {
         PublicKey = entity.PublicKey,
         Nickname = entity.Nickname,

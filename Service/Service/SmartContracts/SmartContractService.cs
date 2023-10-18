@@ -2,6 +2,8 @@
 using Blockchain.Data.Infrastructure.UnitOfWork;
 using Blockchain.Services.Mappers;
 using Service.Service.Nfts;
+using Service.Service.TransactionContracts;
+using Service.Service.Transactions;
 
 namespace Service.Service.SmartContracts;
 
@@ -9,19 +11,29 @@ public class SmartContractService : ISmartContractService
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly INftService nftService;
-    public SmartContractService(IUnitOfWork unitOfWork, INftService nftService)
+    private readonly ITransactionContractService transactionContractService;
+    private readonly ITransactionPurchaseService transactionPurchaseService;
+
+    public SmartContractService (
+        IUnitOfWork unitOfWork, 
+        INftService nftService, 
+        TransactionContractService transactionContractService,
+        ITransactionPurchaseService transactionPurchaseService
+    )
     {
         this.unitOfWork = unitOfWork;
         this.nftService = nftService;
+        this.transactionPurchaseService = transactionPurchaseService;
+        this.transactionContractService = transactionContractService;
     }
-    public SmartContractDto GetDetails(string? key)
+    public SmartContractDetailsDto GetDetails(string? key)
     {
         var smartContract = unitOfWork.SmartContracts.GetById(key);
         if (smartContract == null)
         {
             return null;
         }
-        return smartContract.ToDto();
+        return smartContract.ToDetailsDto();
     }
 
     public void CreateSmartContract(string name, int maxSupply, double price, string? accountKey)
@@ -34,10 +46,12 @@ public class SmartContractService : ISmartContractService
                 Name = name,
                 Price = price,
                 OwnerId = account.PublicKey,
-                MaxSupply = maxSupply
+                MaxSupply = maxSupply,
+                FirstAvailableNftId = 0
             };
             unitOfWork.SmartContracts.Add(newSmart);
             unitOfWork.SaveChanges();
+            
         }
         return;
     }
