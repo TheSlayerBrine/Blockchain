@@ -31,6 +31,19 @@ public class TransactionPurchaseRepository : Repository<TransactionPurchase> , I
         var TransactionPurchase = dbContext.TransactionPurchases.FirstOrDefault(x => x.Id == id);
         return TransactionPurchase;
     }
+
+    public IEnumerable<TransactionPurchase> GetAllByAccountKey(string accountKey)
+    {
+        var transactionList = dbContext.TransactionPurchases.Where(x => x.ToAccount.PublicKey == accountKey).ToList();
+        return transactionList;
+    }
+
+    public IEnumerable<TransactionPurchase> GetAllBySmartKey(string smartKey)
+    {
+       var transactionList = dbContext.TransactionPurchases.Where(x => x.FromSmartContract.PublicKey == smartKey).ToList();
+       return transactionList;
+    }
+
     public IEnumerable<TransactionPurchase> GetAll()
     {
         return dbContext.TransactionPurchases.ToList();

@@ -4,16 +4,17 @@ using Blockchain.Services.Service.Users;
 using Blockchain.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Controllers;
 
 namespace Blockchain.WebApi.Controllers;
 
 [ApiController]
 [Route("api/account")]
-public class AccountController :ControllerBase
+public class AccountController : BaseController
 {
     private readonly IAccountService accountService;
 
-    public AccountController(IAccountService accountService)
+    public AccountController(IAccountService accountService) : base(accountService)
     {
         this.accountService = accountService;
     }
@@ -25,23 +26,7 @@ public class AccountController :ControllerBase
         var currentAccount = GetCurrentAccount();
         return Ok($"your key is {currentAccount.PublicKey}");
     }
-    private  AccountModel GetCurrentAccount()
-    {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity is not null)
-            {
-                var userClaims = identity.Claims;
-                var key = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
-                var balance = accountService.CheckBalance(key);
-                return new AccountModel
-                {
-                    PublicKey = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value,
-                    Balance = balance
-                };
-            }
-
-            return null;
-    }
+  
 
     [HttpPut("UpdateName")]
     [Authorize]
@@ -56,6 +41,7 @@ public class AccountController :ControllerBase
 
         return Unauthorized();
     }
+    
 
     [HttpPost("DepositAthereum")]
     [Authorize]

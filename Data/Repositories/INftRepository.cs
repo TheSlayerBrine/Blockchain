@@ -5,7 +5,7 @@ namespace Blockchain.Data.Repositories
 {
     public interface INftRepository : IRepository<Nft>
     {
-        Nft GetById(int id);
+        /*Nft GetById(int id);*/
        Nft GetByName(string name);
     }
 }

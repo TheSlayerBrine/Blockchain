@@ -2,5 +2,6 @@
 
 public interface ITransactionPurchaseService
 {
-    void CreateTransaction(string smartKey, string buyerKey);
+    void CreateTransaction(string smartKey, string buyerKey, int nftId);
+    TransactionPurchaseDto GetDetails(Guid transactionId);
 }

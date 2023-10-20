@@ -30,6 +30,19 @@ namespace Blockchain.Data.Repositories
                 var TransactionContract = dbContext.TransactionContracts.FirstOrDefault(x => x.Id == id);
                 return TransactionContract;
             }
+
+            public IEnumerable<TransactionContract> GetAllByAccountKey(string accountKey)
+            {
+                var transactionList = dbContext.TransactionContracts.Where(x => x.FromAccount.PublicKey == accountKey).ToList();
+                return transactionList;
+            }
+
+            public IEnumerable<TransactionContract> GetAllBySmartKey(string smartKey)
+            {
+                var transactionList = dbContext.TransactionContracts.Where(x => x.ToSmartContract.PublicKey == smartKey).ToList();
+                return transactionList;
+            }
+
             public IEnumerable<TransactionContract> GetAll()
             {
                 return dbContext.TransactionContracts.ToList();

@@ -78,6 +78,9 @@ namespace Blockchain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(26)");
 
+                    b.Property<int>("nftId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FromAddress");
@@ -111,24 +114,26 @@ namespace Blockchain.Migrations
 
             modelBuilder.Entity("Blockchain.Data.Entities.Nft", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Identificator")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CollectionKey")
                         .IsRequired()
                         .HasColumnType("nvarchar(26)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerKey")
+                        .IsRequired()
                         .HasColumnType("nvarchar(26)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Identificator");
 
                     b.HasIndex("CollectionKey");
 
@@ -208,7 +213,8 @@ namespace Blockchain.Migrations
                     b.HasOne("Blockchain.Data.Entities.Account", "Owner")
                         .WithMany("Nfts")
                         .HasForeignKey("OwnerKey")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Collection");
 

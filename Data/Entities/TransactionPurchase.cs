@@ -10,6 +10,7 @@ namespace BlockChain.Data.Entities
             public string ToAddress { get; set; }
             public Account ToAccount { get; set; }
             public double AmountExchanged { get; set; }
+            public int nftId { get; set; }
             public DateTime CreatedAt { get; set; }
     }
 }

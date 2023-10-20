@@ -70,6 +70,8 @@ namespace BlockChain.Data.Infrastructure.Context
                .HasForeignKey(t => t.ToAddress)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Nft>()
+                .HasKey(n => n.Identificator);
 
 
             base.OnModelCreating(modelBuilder);

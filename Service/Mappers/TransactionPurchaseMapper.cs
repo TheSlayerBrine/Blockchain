@@ -20,6 +20,8 @@ public static class TransactionPurchaseMapper
             ToAddress = entity.ToAddress,
             FromSmartContract = entity.FromSmartContract.ToDto(),
             CreatedAt = entity.CreatedAt,
+            nftId = entity.nftId,
+            AmountExchanged = entity.AmountExchanged
 
         };
     }
@@ -38,7 +40,9 @@ public static class TransactionPurchaseMapper
             FromAddress = dto.FromAddress,
             ToAddress = dto.ToAddress,
             FromSmartContract = dto.FromSmartContract.ToEntity(),
-            CreatedAt = dto.CreatedAt
+            CreatedAt = dto.CreatedAt,
+            nftId = dto.nftId,
+            AmountExchanged = dto.AmountExchanged
 
         };
     }

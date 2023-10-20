@@ -12,4 +12,5 @@ public class TransactionPurchaseDto
     public AccountDto ToAccount { get; set; }
     public double AmountExchanged { get; set; }
     public DateTime CreatedAt { get; set; }
+    public int nftId { get; set; }
 }

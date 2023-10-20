@@ -86,3 +86,7 @@ C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\Humanizer.dll
 C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\Mono.TextTemplating.dll
 C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\Azure.Storage.Blobs.dll
+C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\Azure.Storage.Common.dll
+C:\Users\cgame\RiderProjects\BlockChain\WebApi\bin\Debug\net7.0\System.IO.Hashing.dll

@@ -1,5 +1,6 @@
 ﻿using Blockchain.Data.Entities;
 using Blockchain.Data.Infrastructure.UnitOfWork;
+using Blockchain.Services.Mappers;
 using Service.Service.SmartContracts;
 
 namespace Service.Service.TransactionContracts;
@@ -31,6 +32,50 @@ public class TransactionContractService : ITransactionContractService
         }
 
         return;
+    }
+
+    public TransactionContractDto GetDetails(Guid transactionId)
+    {
+        var transaction = unitOfWork.TransactionContracts.GetById(transactionId);
+        if (transaction is not null)
+        {
+            return transaction.ToDto();
+        }
+
+        return null;
+    }
+    public IEnumerable<TransactionContractDto> GetAllByAccount(string accountKey)
+    {
+        var transactions = unitOfWork.TransactionContracts.GetAllByAccountKey(accountKey).ToList();
+        if (transactions is not null)
+        {
+            var dto = new List <TransactionContractDto>();
+            foreach(var transaction in transactions)
+            {
+                dto.Add(transaction.ToDto());
+            }
+
+            return dto;
+        }
+
+        return null;
+    }
+
+    public IEnumerable<TransactionContractDto> GetAllBySmart(string smartKey)
+    {
+        var transactions = unitOfWork.TransactionContracts.GetAllBySmartKey(smartKey).ToList();
+        if (transactions is not null)
+        {
+            var dto = new List <TransactionContractDto>();
+            foreach(var transaction in transactions)
+            {
+                dto.Add(transaction.ToDto());
+            }
+
+            return dto;
+        }
+
+        return null;
     }
 
     public void ChangeContractTransaction(string smartKey, string? name, int? maxSupply)

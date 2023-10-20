@@ -36,7 +36,7 @@ public class SmartContractService : ISmartContractService
         return smartContract.ToDetailsDto();
     }
 
-    public void CreateSmartContract(string name, int maxSupply, double price, string? accountKey)
+    public SmartContractDto CreateSmartContract(string name, int maxSupply, double price, string? accountKey)
     {
         var account = unitOfWork.Accounts.GetById(accountKey);
         if (account is not null)
@@ -51,9 +51,10 @@ public class SmartContractService : ISmartContractService
             };
             unitOfWork.SmartContracts.Add(newSmart);
             unitOfWork.SaveChanges();
-            
+            return newSmart.ToDto();
         }
-        return;
+
+        return null;
     }
 
     public void ChangeSmartContractName(string name, string smartKey, string? accountKey)
@@ -75,6 +76,7 @@ public class SmartContractService : ISmartContractService
         {
             smart.MaxSupply = maxSupply;
             unitOfWork.SaveChanges();
+            
         }
     }
 
@@ -87,7 +89,9 @@ public class SmartContractService : ISmartContractService
             account.Balance -= smart.Price;
             smart.Funds += smart.Price;
             nftService.CreateNft(smartKey, accountKey, smart.Name,smart.FirstAvailableNftId);
+            transactionPurchaseService.CreateTransaction(smart.PublicKey, account.PublicKey, smart.FirstAvailableNftId);
             smart.FirstAvailableNftId++;
+            
         }
         return;
     }

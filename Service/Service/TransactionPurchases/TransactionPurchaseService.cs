@@ -1,5 +1,6 @@
 ﻿using BlockChain.Data.Entities;
 using Blockchain.Data.Infrastructure.UnitOfWork;
+using Blockchain.Services.Mappers;
 
 namespace Service.Service.Transactions;
 
@@ -12,7 +13,7 @@ public class TransactionPurchaseService : ITransactionPurchaseService
         this.unitOfWork = unitOfWork;
     }
 
-    public void CreateTransaction(string smartKey, string buyerKey)
+    public void CreateTransaction(string smartKey, string buyerKey, int nftId)
     {
         var account = unitOfWork.Accounts.GetById(buyerKey);
         var smart = unitOfWork.SmartContracts.GetById(smartKey);
@@ -23,8 +24,20 @@ public class TransactionPurchaseService : ITransactionPurchaseService
                 FromAddress = smart.PublicKey,
                 ToAddress = account.PublicKey,
                 AmountExchanged = smart.Price,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                nftId = nftId
             };
         }
+    }
+
+    public TransactionPurchaseDto GetDetails(Guid transactionId)
+    {
+        var transaction = unitOfWork.TransactionPurchases.GetById(transactionId);
+        if (transaction is not null)
+        {
+            return transaction.ToDto();
+        }
+
+        return null;
     }
 }
