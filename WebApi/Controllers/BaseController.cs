@@ -1,50 +1,46 @@
 ﻿using System.Security.Claims;
 using Blockchain.Services.Service.Users;
 using Blockchain.WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Service.SmartContracts;
 using Service.Service.TransactionContracts;
+using Service.Service.Transactions;
 
 namespace WebApi.Controllers;
-
+[ApiController]
+[Authorize]
 public abstract class BaseController : ControllerBase
 {
-    private readonly IAccountService accountService;
-    private readonly ISmartContractService smartContractService;
-    private readonly ITransactionContractService transactionContractService;
-    
+   protected string? AccountKey
+   {
+      get
+      {
+         if (HttpContext is null || HttpContext.User is null)
+         {
+            return null;
+         }
 
-    public BaseController(IAccountService accountService)
-    {
-        this.accountService = accountService;
-        
-    }
-    public BaseController(ISmartContractService smartContractService)
-    {
-        this.smartContractService = smartContractService;
-    }
-    public BaseController(ITransactionContractService transactionContractService)
-    {
-        this.transactionContractService = transactionContractService ;
-    }
-    
-    
-    public AccountModel GetCurrentAccount()
-    {
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-        if (identity is not null)
-        {
-            var userClaims = identity.Claims;
-            var key = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
-            var balance = accountService.CheckBalance(key);
-            return new AccountModel
-            {
-                PublicKey = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value,
-                Balance = balance
-            };
-        }
+         var currentUser = HttpContext.User;
+         if (!currentUser.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
+         {
+            return null;
+         }
+         var key = currentUser.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
+         if (key is not null)
+         {
+            return key;
+         }
 
-        return null;
-    }
+         return null;
+      }
+   }
+   protected void ValidateAccountKey()
+   {
+      if (AccountKey is null)
+      {
+         throw new ArgumentNullException(nameof(AccountKey), "User Id not found");
+      }
+   }
    
 }

@@ -14,7 +14,7 @@ public class AccountController : BaseController
 {
     private readonly IAccountService accountService;
 
-    public AccountController(IAccountService accountService) : base(accountService)
+    public AccountController(IAccountService accountService)
     {
         this.accountService = accountService;
     }
@@ -23,50 +23,30 @@ public class AccountController : BaseController
     [Authorize]
     public IActionResult GetCurrentKey()
     {
-        var currentAccount = GetCurrentAccount();
-        return Ok($"your key is {currentAccount.PublicKey}");
+        return Ok($"your key is {AccountKey}");
     }
-  
 
     [HttpPut("UpdateName")]
-    [Authorize]
-    public IActionResult UpdateName(string? name) // Nu afiseaza Nickname u in OK
+    public IActionResult UpdateName(string? name)
     {
-        var currentAccount = GetCurrentAccount();
-        if (currentAccount is not null)
-        {
-            accountService.ChangeNickname(name, currentAccount.PublicKey);
-            return Ok($"your new name is {currentAccount.Nickname}");
-        }
-
-        return Unauthorized();
+        ValidateAccountKey();
+        accountService.ChangeNickname(name, AccountKey);
+        return Ok();
     }
-    
 
     [HttpPost("DepositAthereum")]
-    [Authorize]
     public IActionResult DepositAthereum(double amount)
     {
-        var currentAccount = GetCurrentAccount();
-        if (currentAccount is not null)
-        {
-            accountService.DepositBalance(amount, currentAccount.PublicKey);
-            return Ok($"your new balance is {currentAccount.Balance}");
-        }
-
-        return Unauthorized();
+        ValidateAccountKey();
+        accountService.DepositBalance(amount, AccountKey);
+        return Ok();
     }
+
     [HttpPost("WithdrawUsd")]
-    [Authorize]
     public IActionResult WithdrawUsd(double amount)
     {
-        var currentAccount = GetCurrentAccount();
-        if (currentAccount is not null)
-        {
-            accountService.WithdrawBalance(amount, currentAccount.PublicKey);
-            return Ok($"your new balance is {currentAccount.Balance}");
-        }   
-        return Unauthorized();
+        ValidateAccountKey();
+        accountService.WithdrawBalance(amount, AccountKey);
+        return Ok();
     }
-    
 }

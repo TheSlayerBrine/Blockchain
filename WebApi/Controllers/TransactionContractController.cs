@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Service.TransactionContracts;
 
 namespace WebApi.Controllers;
+
 [AllowAnonymous]
 [ApiController]
 [Route("api/transactionC")]
 public class TransactionContractController : BaseController
 {
     private readonly TransactionContractService transactionContractService;
-    public TransactionContractController(TransactionContractService transactionContractService) : base(transactionContractService)
+
+    public TransactionContractController(TransactionContractService transactionContractService)
     {
         this.transactionContractService = transactionContractService;
     }
+
     [HttpGet("GetDetails")]
     public IActionResult GetDetails(Guid key)
     {
@@ -24,14 +27,8 @@ public class TransactionContractController : BaseController
     [Authorize]
     public IActionResult GetAllTransactionsOfCurrentUser()
     {
-         var currentAccount = GetCurrentAccount();
-            if (currentAccount is not null)
-            {
-                var transactions = transactionContractService.GetAllByAccount(currentAccount.PublicKey);
-                return Ok(transactions);
-            }
-
-            return Unauthorized();
+        ValidateAccountKey();
+        var transactions = transactionContractService.GetAllByAccount(AccountKey);
+        return Ok(transactions);
     }
-    
 }
