@@ -1,5 +1,7 @@
 ﻿using Blockchain.WebApi.Mappers;
+using Blockchain.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Service.Service.SmartContracts;
 
@@ -18,10 +20,10 @@ public class SmartContractController : BaseController
 
     [HttpPost("CreateSmart")]
     [Authorize]
-    public IActionResult CreateSmartContract([FromBody] string name, double price, int maxSupply)
+    public IActionResult CreateSmartContract([FromBody] CreateSmartRequest request)
     {
         ValidateAccountKey();
-        var smart = smartContractService.CreateSmartContract(name, maxSupply, price, AccountKey);
+        var smart = smartContractService.CreateSmartContract(request.ToDto(), AccountKey);  
         var model = smart.ToApiModel();
         return Ok($"You created a new smart with the name {model.Name}, price {model.Price} and supply of {model.MaxSupply}");
     }
@@ -32,6 +34,14 @@ public class SmartContractController : BaseController
     {
         ValidateAccountKey();
         smartContractService.PurchaseNft(smartKey, AccountKey);
+        return Ok();
+    }
+
+    [HttpPut("ChangeDetails")]
+    public IActionResult ChangeDetails([FromQuery] string smartKey, SmartContractModel? model)
+    {
+        ValidateAccountKey();
+        smartContractService.ChangeSmartContractDetails(smartKey, model.ToDto());
         return Ok();
     }
     

@@ -24,9 +24,9 @@ namespace Blockchain.Data.Repositories
         {
             return dbContext.Nfts.Where(x => x.Id == id).FirstOrDefault();
         }
-        public Nft GetById(int id)
+        public Nft GetById(Guid id)
         {
-            var Nft = dbContext.Nfts.FirstOrDefault(x => x.Id == id);
+            var Nft = dbContext.Nfts.FirstOrDefault(x => x.Identificator == id);
             return Nft;
         }
         public IEnumerable<Nft> GetAll()

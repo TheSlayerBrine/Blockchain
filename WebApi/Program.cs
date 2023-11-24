@@ -1,4 +1,5 @@
 using System.Text;
+using Azure.Storage.Blobs;
 using Blockchain.Data.Infrastructure.UnitOfWork;
 using Blockchain.Data.Repositories;
 using Blockchain.Services.Service.Common.Auth;
@@ -8,6 +9,11 @@ using Blockchain.Services.Service.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Service.Service.Blob;
+using Service.Service.Nfts;
+using Service.Service.SmartContracts;
+using Service.Service.TransactionContracts;
+using Service.Service.Transactions;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -27,8 +33,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         }
     ));
 builder.Services.AddControllers();
-var connectionString = builder.Configuration.GetConnectionString("Blockchain");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("WebApi")));
+var connectionStringDatabase = builder.Configuration.GetConnectionString("Blockchain");
+var connectionStringAzure = builder.Configuration.GetConnectionString("Azure");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionStringDatabase, b => b.MigrationsAssembly("WebApi")));
+builder.Services.AddSingleton<BlobServiceClient>(x => new BlobServiceClient(config.GetValue<string>("connectionStringAzure"))); 
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -38,6 +46,12 @@ builder.Services.AddScoped<ITransactionPurchaseRepository, TransactionPurchaseRe
 builder.Services.AddScoped<ISmartContractRepository, SmartContractRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<INftService, NftService>();
+builder.Services.AddScoped<ITransactionPurchaseService, TransactionPurchaseService>();
+builder.Services.AddScoped<ITransactionContractService, TransactionContractService>();
+builder.Services.AddScoped<ISmartContractService, SmartContractService>();
+builder.Services.AddScoped<IBlobService, BlobService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

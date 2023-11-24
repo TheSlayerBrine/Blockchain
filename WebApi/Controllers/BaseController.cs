@@ -12,6 +12,7 @@ namespace WebApi.Controllers;
 [Authorize]
 public abstract class BaseController : ControllerBase
 {
+   
    protected string? AccountKey
    {
       get

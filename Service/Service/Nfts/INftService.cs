@@ -3,4 +3,5 @@
 public interface INftService
 {
     void CreateNft(string smartKey, string newOwner, string name, int index);
+    NftDto GetDetails(Guid identificator);
 }

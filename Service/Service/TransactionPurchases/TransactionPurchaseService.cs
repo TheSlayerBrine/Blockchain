@@ -40,4 +40,19 @@ public class TransactionPurchaseService : ITransactionPurchaseService
 
         return null;
     }
+    public IEnumerable<TransactionPurchaseDto> GetAllByAccount(string accountKey)
+    {
+        var transactions = unitOfWork.TransactionPurchases.GetAllByAccountKey(accountKey).ToList();
+        if (transactions is not null)
+        {
+            var dto = new List <TransactionPurchaseDto>();
+            foreach(var transaction in transactions)
+            {
+                dto.Add(transaction.ToDto());
+            }
+            return dto;
+        }
+
+        return null;
+    }
 }

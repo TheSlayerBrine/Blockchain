@@ -20,9 +20,9 @@ public class AccountController : BaseController
     }
 
     [HttpGet("GetKey")]
-    [Authorize]
     public IActionResult GetCurrentKey()
     {
+        ValidateAccountKey();
         return Ok($"your key is {AccountKey}");
     }
 

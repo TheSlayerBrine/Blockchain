@@ -7,6 +7,7 @@ namespace BlockChain.Data.Entities
         public string PublicKey { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public string CollectionImageUrl { get; set; }
         public Account Owner { get; set; }
         public int FirstAvailableNftId { get; set; }
         public string OwnerId { get; set; }

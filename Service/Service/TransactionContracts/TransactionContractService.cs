@@ -53,8 +53,7 @@ public class TransactionContractService : ITransactionContractService
             foreach(var transaction in transactions)
             {
                 dto.Add(transaction.ToDto());
-            }
-
+            }              
             return dto;
         }
 
@@ -83,27 +82,26 @@ public class TransactionContractService : ITransactionContractService
         var smart = unitOfWork.SmartContracts.GetById(smartKey);
         if (smart is not null)
         {
+            string details = "";
             if (name is not null)
             {
-                string details = $"Changed name to {smart.Name} from smart with key {smart.PublicKey}";
+                 details = $"Changed name to {smart.Name} from smart with key {smart.PublicKey}";
             }
 
             if (maxSupply is not null)
             {
-                string details = $"Changed max supply to {smart.MaxSupply} from smart with key {smart.PublicKey}";
+                 details = $"Changed max supply to {smart.MaxSupply} from smart with key {smart.PublicKey}";
             }
             
             var newTransaction = new TransactionContract
             {
                 FromAddress = smart.OwnerId,
                 ToAddress = smart.PublicKey,
-                /*Details = details,*/ // crapa
+                Details = details,
                 CreatedAt = DateTime.Now
             };
             unitOfWork.TransactionContracts.Add(newTransaction);
             unitOfWork.SaveChanges();
         }
-
-        return;
     }
 }

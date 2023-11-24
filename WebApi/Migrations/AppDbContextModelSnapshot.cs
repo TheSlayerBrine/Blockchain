@@ -28,6 +28,10 @@ namespace Blockchain.Migrations
                         .HasMaxLength(26)
                         .HasColumnType("nvarchar(26)");
 
+                    b.Property<string>("CollectionImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FirstAvailableNftId")
                         .HasColumnType("int");
 

@@ -1,6 +1,8 @@
 ﻿using BlockChain.Data.Entities;
 using Blockchain.Data.Infrastructure.UnitOfWork;
 using Blockchain.Services.Mappers;
+using Microsoft.AspNetCore.Http;
+using Service.Service.Blob;
 using Service.Service.Nfts;
 using Service.Service.TransactionContracts;
 using Service.Service.Transactions;
@@ -13,19 +15,24 @@ public class SmartContractService : ISmartContractService
     private readonly INftService nftService;
     private readonly ITransactionContractService transactionContractService;
     private readonly ITransactionPurchaseService transactionPurchaseService;
+    private readonly IBlobService blobService;
+    private ISmartContractService smartContractServiceImplementation;
 
-    public SmartContractService (
-        IUnitOfWork unitOfWork, 
-        INftService nftService, 
-        TransactionContractService transactionContractService,
-        ITransactionPurchaseService transactionPurchaseService
+    public SmartContractService(
+        IUnitOfWork unitOfWork,
+        INftService nftService,
+        ITransactionContractService transactionContractService,
+        ITransactionPurchaseService transactionPurchaseService,
+        IBlobService blobService
     )
     {
         this.unitOfWork = unitOfWork;
         this.nftService = nftService;
         this.transactionPurchaseService = transactionPurchaseService;
         this.transactionContractService = transactionContractService;
+        this.blobService = blobService;
     }
+
     public SmartContractDetailsDto GetDetails(string? key)
     {
         var smartContract = unitOfWork.SmartContracts.GetById(key);
@@ -33,22 +40,27 @@ public class SmartContractService : ISmartContractService
         {
             return null;
         }
+
         return smartContract.ToDetailsDto();
     }
 
-    public SmartContractDto CreateSmartContract(string name, int maxSupply, double price, string? accountKey)
+    public SmartContractDto CreateSmartContract(CreateSmartContractDto dto, string? accountKey)
     {
         var account = unitOfWork.Accounts.GetById(accountKey);
         if (account is not null)
         {
             var newSmart = new SmartContract
             {
-                Name = name,
-                Price = price,
+                Name = dto.Name,
+                Price = dto.Price,
                 OwnerId = account.PublicKey,
-                MaxSupply = maxSupply,
+                MaxSupply = dto.MaxSupply,
                 FirstAvailableNftId = 0
             };
+
+            transactionContractService.CreateTransaction(newSmart.PublicKey);
+          
+            UploadImages(newSmart, dto.CollectionImage);
             unitOfWork.SmartContracts.Add(newSmart);
             unitOfWork.SaveChanges();
             return newSmart.ToDto();
@@ -57,43 +69,44 @@ public class SmartContractService : ISmartContractService
         return null;
     }
 
-    public void ChangeSmartContractName(string name, string smartKey, string? accountKey)
+    public void ChangeSmartContractDetails(string smartKey, SmartContractDto smartContractDto)
     {
-        var account = unitOfWork.Accounts.GetById(accountKey);
-        var smart = unitOfWork.SmartContracts.GetById(smartKey);
-        if (account is not null && account.PublicKey == smart.OwnerId)
+        if (smartContractDto is null)
         {
-            smart.Name = name;
+            return;
+        }
+
+        var account = unitOfWork.Accounts.GetById(smartContractDto.OwnerId);
+        var smart = unitOfWork.SmartContracts.GetById(smartKey);
+        if (account.PublicKey == smart.OwnerId)
+        {
+            if (!string.IsNullOrEmpty(smartContractDto.Name))
+            {
+                smart.Name = smartContractDto.Name;
+            }
+
+            if (smartContractDto.MaxSupply != null && smartContractDto.MaxSupply > smart.SupplySold)
+            {
+                smart.MaxSupply = smartContractDto.MaxSupply;
+            }
+
             unitOfWork.SaveChanges();
         }
     }
 
-    public void ChangeSmartContractMaxSupply(int maxSupply, string smartKey, string? accountKey)
+    public void PurchaseNft(string smartKey, string? accountKey)
     {
         var account = unitOfWork.Accounts.GetById(accountKey);
         var smart = unitOfWork.SmartContracts.GetById(smartKey);
-        if (account is not null && account.PublicKey == smart.OwnerId && maxSupply > smart.SupplySold)
-        {
-            smart.MaxSupply = maxSupply;
-            unitOfWork.SaveChanges();
-            
-        }
-    }
-
-    public void PurchaseNft( string smartKey, string? accountKey)
-    {
-        var account = unitOfWork.Accounts.GetById(accountKey);
-        var smart = unitOfWork.SmartContracts.GetById(smartKey);
-        if (account is not null && smart is not null && account.Balance > smart.Price && smart.FirstAvailableNftId <= smart.MaxSupply )
+        if (account is not null && smart is not null && account.Balance > smart.Price &&
+            smart.FirstAvailableNftId <= smart.MaxSupply)
         {
             account.Balance -= smart.Price;
             smart.Funds += smart.Price;
-            nftService.CreateNft(smartKey, accountKey, smart.Name,smart.FirstAvailableNftId);
+            nftService.CreateNft(smartKey, accountKey, smart.Name, smart.FirstAvailableNftId);
             transactionPurchaseService.CreateTransaction(smart.PublicKey, account.PublicKey, smart.FirstAvailableNftId);
             smart.FirstAvailableNftId++;
-            
         }
-        return;
     }
 
     public double WithdrawFunds(double amount, string smartKey, string? accountKey)
@@ -108,5 +121,11 @@ public class SmartContractService : ISmartContractService
         }
 
         return 0;
+    }
+
+    private void UploadImages(SmartContract smart, IFormFile collectionImage)
+    {
+        string collectionImageUrl = blobService.UploadBlob("smart-contract-images", collectionImage);
+        smart.CollectionImageUrl = collectionImageUrl;
     }
 }

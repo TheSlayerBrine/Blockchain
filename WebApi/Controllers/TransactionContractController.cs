@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Blockchain.WebApi.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Service.TransactionContracts;
 
@@ -9,9 +10,9 @@ namespace WebApi.Controllers;
 [Route("api/transactionC")]
 public class TransactionContractController : BaseController
 {
-    private readonly TransactionContractService transactionContractService;
+    private readonly ITransactionContractService transactionContractService;
 
-    public TransactionContractController(TransactionContractService transactionContractService)
+    public TransactionContractController(ITransactionContractService transactionContractService)
     {
         this.transactionContractService = transactionContractService;
     }
@@ -20,15 +21,14 @@ public class TransactionContractController : BaseController
     public IActionResult GetDetails(Guid key)
     {
         var transaction = transactionContractService.GetDetails(key);
-        return Ok(transaction);
+        return Ok(transaction.ToApiModel());
     }
 
     [HttpGet("GetAllCurrent")]
-    [Authorize]
     public IActionResult GetAllTransactionsOfCurrentUser()
     {
         ValidateAccountKey();
         var transactions = transactionContractService.GetAllByAccount(AccountKey);
-        return Ok(transactions);
+        return Ok(transactions.Select(x => x.ToApiModel()));
     }
 }
