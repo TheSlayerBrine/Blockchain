@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "9b935332-c0c0-4a1d-862c-16ce1715d369",
+		"name": "Blockchain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"id": "19e14f0b-3882-44ca-be89-cfbc2d78d479",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"publicKey\" : \"0x891Aa8AAd1fFC59Ee1dF0FaA\",\r\n    \"privateKey\" : \"0x21382D535E448E5F737Ef7e4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5157/api/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"id": "10e986f5-d108-49b5-98c9-791c1692d20e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:5157/api/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAuthorizedKey",
+			"id": "327a4776-7513-4d5d-9e63-2967122f3d49",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjB4ODkxQWE4QUFkMWZGQzU5RWUxZEYwRmFBIiwiZXhwIjoxNjk3NjA3MzU2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUxNTciLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxNTcifQ.lhgXF8II5WxvSgAbxTk4dndYnSSTEVUsn1xLLXs_EvY"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5157/api/account/GetKey"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateName",
+			"id": "5200767c-5a2c-448c-b6e1-ebb3be4a24c1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjB4ODkxQWE4QUFkMWZGQzU5RWUxZEYwRmFBIiwiZXhwIjoxNzAxMTM2MDkzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUxNTciLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxNTcifQ.mgXK_8O2Nyk6wJGPii45pxNJ0f_IikG2JuMV21MnfQM"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5157/api/account/UpdateName?name=antonio",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5157",
+					"path": [
+						"api",
+						"account",
+						"UpdateName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "antonio"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DepositAthereum",
+			"id": "5d5b0966-ce52-49e1-8391-1a684a4db2c3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjB4ODkxQWE4QUFkMWZGQzU5RWUxZEYwRmFBIiwiZXhwIjoxNzAxMTM2MDkzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUxNTciLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxNTcifQ.mgXK_8O2Nyk6wJGPii45pxNJ0f_IikG2JuMV21MnfQM"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5157/api/account/DepositAthereum?amount=300",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5157",
+					"path": [
+						"api",
+						"account",
+						"DepositAthereum"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "300",
+							"description": "valoare in dolari (nceonvertita)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WithdrawUsd",
+			"id": "6bb98192-8e4a-4c55-9351-f8b94e37bd12",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjB4ODkxQWE4QUFkMWZGQzU5RWUxZEYwRmFBIiwiZXhwIjoxNjk3NjA3MzU2LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUxNTciLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxNTcifQ.lhgXF8II5WxvSgAbxTk4dndYnSSTEVUsn1xLLXs_EvY"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5157/api/account/WithdrawUsd?amount=46",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5157",
+					"path": [
+						"api",
+						"account",
+						"WithdrawUsd"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "46",
+							"description": "valoare athereum care o convertim in dolari"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PurchaseNft",
+			"id": "c2dfe483-ab15-458e-b6c1-29b20f97b97f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjB4ODkxQWE4QUFkMWZGQzU5RWUxZEYwRmFBIiwiZXhwIjoxNzAxMTM2MDkzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUxNTciLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxNTcifQ.mgXK_8O2Nyk6wJGPii45pxNJ0f_IikG2JuMV21MnfQM"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5157/api/smart/PurchaseNft?smartKey=0x8aCcceF55DCc7D2801Fa71D3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5157",
+					"path": [
+						"api",
+						"smart",
+						"PurchaseNft"
+					],
+					"query": [
+						{
+							"key": "smartKey",
+							"value": "0x8aCcceF55DCc7D2801Fa71D3",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateSmart",
+			"id": "6cb4e62f-36d9-4ebe-957b-95d07edb5db6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjB4ODkxQWE4QUFkMWZGQzU5RWUxZEYwRmFBIiwiZXhwIjoxNzAxMDM3MjY3LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUxNTciLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxNTcifQ.6zuDZPA_jFWAuvm1jx3ywaF5x0_y7OPIxkW7VNcIJuY"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Collection3",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "17",
+							"type": "text"
+						},
+						{
+							"key": "collectionImage",
+							"type": "file",
+							"fileNotInWorkingDirectoryWarning": "This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.",
+							"src": "/C:/Users/cgame/Pictures/Screenshots/Screenshot (8).png"
+						},
+						{
+							"key": "maxSupply",
+							"value": "15",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:5157/api/smart/CreateSmart"
+			},
+			"response": []
+		}
+	]
+}
